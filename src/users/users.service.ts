@@ -4,7 +4,7 @@ import { User } from './user.entity';
 
 import { Repository } from 'typeorm';
 import { Iuser } from 'src/interface/users';
-import { DataSource } from 'typeorm';
+import { AppDataSource } from 'src/data-source';
 @Injectable()
 export class UsersService {
   constructor(
@@ -16,9 +16,9 @@ export class UsersService {
     return await this.userRepository.save(data);
   }
 
-  // async getUsers(): Promise<User[]> {
-  //     return await this.userRepository.find();
-  // }
+  async getUsers(): Promise<User[]> {
+      return await this.userRepository.find();
+  }
 
   async getUser(email: string): Promise<User> {
     return await this.userRepository.findOne({
@@ -28,18 +28,13 @@ export class UsersService {
     });
   }
 
-  async setRole(data: Iuser, id: number) {
-    const { firstname, email, password } = data;
-
-    const result = this.userRepository
-      .createQueryBuilder()
+  async setRole(id: number) {
+    const result = AppDataSource.createQueryBuilder()
       .update(User)
-      .where({
-        id: id,
-      })
-      .returning('*')
+      .set({ role: 'supervisor' })
+      .where('id = :id', { id: id })
       .execute();
-
-    return (await result).raw[0];
+    console.log(result);
+    return result;
   }
 }

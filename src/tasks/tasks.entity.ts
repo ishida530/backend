@@ -19,6 +19,9 @@ export class Task {
   @Column()
   author: string;
 
+  @Column({default:100})
+  status: number;
+
   @ManyToOne(() => User, (user) => user.id)
   user: User;
 }

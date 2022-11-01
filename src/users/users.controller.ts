@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
 import * as cookieParser from 'cookie-parser';
+import { User } from './user.entity';
 
 @Controller('user')
 export class UsersController {
@@ -39,10 +40,10 @@ export class UsersController {
   return user;
   }
 
-  // @Post('/getUsers')
-  // async getUsers(){
-  //   return this.userService.getUsers()
-  // }
+  @Post('/getAll')
+  async getUsers(){
+    return this.userService.getUsers()
+  }
 
   @Post('/login')
   async login(
@@ -97,5 +98,14 @@ export class UsersController {
       return {
           message: 'success'
       }
+  }
+
+  @Post('setRole')
+  async setRole(
+    @Body('id')id:number
+  ){
+    const x= this.userService.setRole(1)
+    console.log(x)
+    return x
   }
 }

@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { DataSource } from 'typeorm';
 import { User } from './users/user.entity';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/tasks.entity';
@@ -33,5 +32,5 @@ import { Task } from './tasks/tasks.entity';
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor() {}
 }
